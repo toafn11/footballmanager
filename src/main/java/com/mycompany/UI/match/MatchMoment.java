@@ -8,6 +8,7 @@ import com.mycompany.UI.frame.HomeFrame;
 import static com.mycompany.UI.frame.Main.conn;
 import com.mycompany.access.MatchAccess;
 import com.mycompany.access.TeamAccess;
+import com.mycompany.model.Match;
 import com.mycompany.model.MatchEventTemp;
 import com.mycompany.model.Player;
 import com.mycompany.model.Versus;
@@ -274,10 +275,32 @@ public class MatchMoment extends javax.swing.JPanel {
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
 
-        try {
-            frame.setMatchManagement();
-        } catch (SQLException ex) {
-            System.getLogger(MatchMoment.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        int tempHomeScore = 0;
+        int tempAwayScore = 0;
+
+        for (MatchEventTemp evtTmp : tempEvents) {
+            String act = evtTmp.action();
+            boolean isHome = evtTmp.isHomeTeam();
+
+            if (act.equals("goal") || act.equals("pen")) {
+                if (isHome) tempHomeScore++; else tempAwayScore++;
+            } 
+            else if (act.equals("OG")) {
+                if (isHome) tempAwayScore++; else tempHomeScore++;
+            }
+        }
+
+        MatchAccess matchAccess = new MatchAccess(conn);
+        String formula = matchAccess.getTournamentFormula(currentMatchId);
+
+        if ("cup".equalsIgnoreCase(formula)) {
+            if (tempHomeScore == tempAwayScore) {
+                JOptionPane.showMessageDialog(this, 
+                    "No draw result on cup tournament", 
+                    "Rule", 
+                    JOptionPane.WARNING_MESSAGE);
+                return; 
+            }
         }
         int confirm = JOptionPane.showConfirmDialog(this, 
                 "End this match?",
@@ -287,7 +310,7 @@ public class MatchMoment extends javax.swing.JPanel {
         if (confirm != JOptionPane.YES_OPTION) {
             return;
         }
-
+        
         if (tempEvents.isEmpty()) {
             int zeroConfirm = JOptionPane.showConfirmDialog(this, 
                     "No event for a draw 0-0?",
@@ -295,8 +318,8 @@ public class MatchMoment extends javax.swing.JPanel {
                     JOptionPane.YES_NO_OPTION);
             if (zeroConfirm != JOptionPane.YES_NO_OPTION) return;
         }
-        MatchAccess matchAccess = new MatchAccess(conn);
-
+        
+        
         try {
             int eventCount = 0;
             for (MatchEventTemp evtTmp : tempEvents) {
@@ -318,7 +341,7 @@ public class MatchMoment extends javax.swing.JPanel {
             if (dbMessage != null && dbMessage.toLowerCase().contains("success")) {
                 
                 JOptionPane.showMessageDialog(this, "Successfully finalize!\n" + dbMessage);
-                
+                frame.setMatchManagement();
             } else {
                 JOptionPane.showMessageDialog(this, 
                         "Error with db:\n" + dbMessage, 

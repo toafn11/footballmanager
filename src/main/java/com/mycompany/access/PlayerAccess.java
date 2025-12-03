@@ -117,12 +117,12 @@ public class PlayerAccess {
 
     public boolean isNumberTaken(int playerId, int newShirtNum) {        
         String sql = "SELECT COUNT(*) FROM players p "
-                   + "JOIN contact c ON p.id = c.player_id "
+                   + "JOIN contract c ON p.id = c.player_id "
                    + "WHERE c.state = 'active' "
                    + "AND p.shirt_num = ? "
                    + "AND p.id != ? "
                    + "AND c.team_id = ("
-                       + "SELECT team_id FROM contact WHERE player_id = ? AND state = 'active' LIMIT 1"
+                       + "SELECT team_id FROM contract WHERE player_id = ? AND state = 'active' LIMIT 1"
                    + ")";
 
         try (PreparedStatement pStm = this.conn.prepareStatement(sql)) {

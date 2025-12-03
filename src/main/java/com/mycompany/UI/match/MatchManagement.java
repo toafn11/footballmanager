@@ -285,8 +285,22 @@ public class MatchManagement extends javax.swing.JPanel {
 
         this.selectedTour = currentTour;
         try {
-            addTableData(currentTour.id());
+            
             nextroundcup.setVisible(currentTour.formula().equals("cup") && isAdmin());
+            
+            TournamentAccess tacc = new TournamentAccess(conn);
+            List<Tournament> tours = tacc.getAllTournaments();
+            cbTour.removeAllItems();
+            Finalize.setVisible(false);
+            nextroundcup.setVisible(false);
+            for (Tournament t : tours) {
+                cbTour.addItem(t);
+            }
+            if (cbTour.getItemCount() > 0) {
+                cbTour.setSelectedItem(currentTour);
+                Tournament first = (Tournament) cbTour.getItemAt(0);
+                addTableData(currentTour.id());
+            }
             
         } catch (SQLException ex) {
             System.getLogger(MatchManagement.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
@@ -297,7 +311,7 @@ public class MatchManagement extends javax.swing.JPanel {
         int tourId = selectedTour.id();
         TournamentAccess tacc = new TournamentAccess(conn);
         String result = tacc.generateNextCupRound(tourId);
-        if (result.contains("Generated!")) {
+        if (result.contains("Created")) {
             JOptionPane.showMessageDialog(this, result);
             try { 
                 addTableData(tourId);

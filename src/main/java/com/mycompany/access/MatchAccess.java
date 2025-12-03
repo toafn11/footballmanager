@@ -230,6 +230,24 @@ public class MatchAccess {
             return  e.getMessage();
         }
     }
+    
+    public String getTournamentFormula(int matchId) {
+        String sql = "SELECT t.formula FROM tournaments t "
+                   + "JOIN matches m ON t.id = m.tour_id "
+                   + "WHERE m.id = ?";
+        
+        try (PreparedStatement pStm = conn.prepareStatement(sql)) {
+            pStm.setInt(1, matchId);
+            try (ResultSet rs = pStm.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("formula");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ""; 
+    }
 }
 
 

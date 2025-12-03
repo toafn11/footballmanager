@@ -423,7 +423,7 @@ public class TournamentAccess {
             }
 
             conn.commit();
-            return "Created round " + nextRound + " (" + (winners.size()/2) + " matche(s)).";
+            return "Created round " + nextRound + " (" + (winners.size()/2) + " matches(s)).";
 
         } catch (SQLException e) {
             try { conn.rollback(); } catch (SQLException ex) {}

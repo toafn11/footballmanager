@@ -375,10 +375,9 @@ public class TransferManagement extends javax.swing.JPanel {
     private void toTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toTableMouseClicked
         int selectedRow = toTable.getSelectedRow();
         String state =  toTable.getValueAt(selectedRow, 6).toString();
-        if(state.equals("pending")){
-            accept.setVisible(true);
-            reject.setVisible(true);
-        }
+        accept.setVisible(state.equals("pending"));
+        reject.setVisible(state.equals("pending"));
+        
         revalidate();
         repaint();
     }//GEN-LAST:event_toTableMouseClicked
