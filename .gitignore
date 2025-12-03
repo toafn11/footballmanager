@@ -1,0 +1,7 @@
+# Windows / Google Drive system files
+desktop.ini
+Desktop.ini
+# Maven
+target/
+build/
+nbproject/private/
