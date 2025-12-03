@@ -143,6 +143,9 @@ public class MatchMoment extends javax.swing.JPanel {
         save.setText("Save");
         save.addActionListener(this::saveActionPerformed);
 
+        momentTable.setBackground(new java.awt.Color(153, 153, 153));
+        momentTable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        momentTable.setForeground(new java.awt.Color(255, 153, 51));
         momentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -241,7 +244,7 @@ public class MatchMoment extends javax.swing.JPanel {
                         .addComponent(save)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(submit)))
-                .addContainerGap(598, Short.MAX_VALUE))
+                .addContainerGap(602, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

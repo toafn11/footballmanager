@@ -66,6 +66,9 @@ public class PlayerTeamList extends javax.swing.JPanel {
 
         jPanel4.setBackground(new java.awt.Color(30, 30, 30));
 
+        playerTable.setBackground(new java.awt.Color(153, 153, 153));
+        playerTable.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        playerTable.setForeground(new java.awt.Color(255, 153, 51));
         playerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -74,7 +77,7 @@ public class PlayerTeamList extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Team", "Name", "Position", "Shirt Number", "Goal", "Yellow Card", "Red Card", "contract End"
+                "Team", "Name", "Position", "Shirt Number", "Goal", "Yellow Card", "Red Card", "Contact End"
             }
         ) {
             boolean[] canEdit = new boolean [] {

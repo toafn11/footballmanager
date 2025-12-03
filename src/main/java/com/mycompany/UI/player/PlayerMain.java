@@ -136,6 +136,9 @@ public class PlayerMain extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 153, 51));
         jLabel2.setText("Statistics");
 
+        statTable.setBackground(new java.awt.Color(153, 153, 153));
+        statTable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        statTable.setForeground(new java.awt.Color(255, 153, 51));
         statTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},

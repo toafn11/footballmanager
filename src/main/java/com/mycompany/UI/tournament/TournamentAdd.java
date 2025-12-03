@@ -108,6 +108,9 @@ public class TournamentAdd extends javax.swing.JPanel {
 
         formula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "round", "cup" }));
 
+        teamTable.setBackground(new java.awt.Color(153, 153, 153));
+        teamTable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        teamTable.setForeground(new java.awt.Color(255, 153, 51));
         teamTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -209,7 +212,7 @@ public class TournamentAdd extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(59, 59, 59)
                 .addComponent(submit)
-                .addContainerGap(642, Short.MAX_VALUE))
+                .addContainerGap(650, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

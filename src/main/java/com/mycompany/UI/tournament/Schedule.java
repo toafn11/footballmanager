@@ -66,6 +66,9 @@ public class Schedule extends javax.swing.JPanel {
 
         jPanel4.setBackground(new java.awt.Color(30, 30, 30));
 
+        versusTable.setBackground(new java.awt.Color(153, 153, 153));
+        versusTable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        versusTable.setForeground(new java.awt.Color(255, 153, 51));
         versusTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},

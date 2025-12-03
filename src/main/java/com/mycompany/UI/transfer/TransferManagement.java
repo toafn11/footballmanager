@@ -127,8 +127,9 @@ public class TransferManagement extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(30, 30, 30));
 
-        toTable.setBackground(new java.awt.Color(102, 102, 102));
-        toTable.setForeground(new java.awt.Color(204, 0, 51));
+        toTable.setBackground(new java.awt.Color(153, 153, 153));
+        toTable.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        toTable.setForeground(new java.awt.Color(204, 85, 0));
         toTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -225,8 +226,9 @@ public class TransferManagement extends javax.swing.JPanel {
         jButton3.setText("Back");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
-        fromTable.setBackground(new java.awt.Color(102, 102, 102));
-        fromTable.setForeground(new java.awt.Color(204, 0, 51));
+        fromTable.setBackground(new java.awt.Color(153, 153, 153));
+        fromTable.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        fromTable.setForeground(new java.awt.Color(204, 85, 0));
         fromTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -296,7 +298,7 @@ public class TransferManagement extends javax.swing.JPanel {
                     .addComponent(name2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(583, Short.MAX_VALUE))
+                .addContainerGap(587, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

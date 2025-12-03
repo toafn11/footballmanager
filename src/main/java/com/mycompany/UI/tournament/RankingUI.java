@@ -70,6 +70,9 @@ private void addTableData(int tourId) throws SQLException {
 
         jPanel4.setBackground(new java.awt.Color(30, 30, 30));
 
+        rankingTable.setBackground(new java.awt.Color(153, 153, 153));
+        rankingTable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        rankingTable.setForeground(new java.awt.Color(255, 153, 51));
         rankingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null},

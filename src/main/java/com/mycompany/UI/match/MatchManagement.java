@@ -122,6 +122,9 @@ public class MatchManagement extends javax.swing.JPanel {
         back.setText("Back");
         back.addActionListener(this::backActionPerformed);
 
+        matchTable.setBackground(new java.awt.Color(153, 153, 153));
+        matchTable.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        matchTable.setForeground(new java.awt.Color(255, 153, 51));
         matchTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},

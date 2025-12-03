@@ -150,6 +150,9 @@ public class TourCareMain extends javax.swing.JFrame {
         jButton5.setBorder(null);
         jButton5.addActionListener(this::jButton5ActionPerformed);
 
+        yellowTable.setBackground(new java.awt.Color(153, 153, 153));
+        yellowTable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        yellowTable.setForeground(new java.awt.Color(255, 255, 204));
         yellowTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -174,6 +177,9 @@ public class TourCareMain extends javax.swing.JFrame {
         jButton1.setText("Back");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
+        redTable.setBackground(new java.awt.Color(153, 153, 153));
+        redTable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        redTable.setForeground(new java.awt.Color(255, 102, 102));
         redTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -195,6 +201,9 @@ public class TourCareMain extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(redTable);
 
+        scoreTable.setBackground(new java.awt.Color(153, 153, 153));
+        scoreTable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        scoreTable.setForeground(new java.awt.Color(102, 204, 255));
         scoreTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},

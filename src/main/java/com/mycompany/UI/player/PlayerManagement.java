@@ -89,8 +89,9 @@ public class PlayerManagement extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(30, 30, 30));
 
-        playerTable.setBackground(new java.awt.Color(102, 102, 102));
-        playerTable.setForeground(new java.awt.Color(204, 0, 51));
+        playerTable.setBackground(new java.awt.Color(153, 153, 153));
+        playerTable.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        playerTable.setForeground(new java.awt.Color(255, 153, 51));
         playerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -174,7 +175,7 @@ public class PlayerManagement extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(110, 110, 110)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addContainerGap(166, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +186,7 @@ public class PlayerManagement extends javax.swing.JPanel {
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(709, Short.MAX_VALUE))
+                .addContainerGap(712, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
