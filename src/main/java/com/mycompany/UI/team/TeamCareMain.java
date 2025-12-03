@@ -145,7 +145,7 @@ public class TeamCareMain extends javax.swing.JFrame {
         jButton5.addActionListener(this::jButton5ActionPerformed);
 
         rankingTable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        rankingTable.setForeground(new java.awt.Color(102, 153, 255));
+        rankingTable.setForeground(new java.awt.Color(0, 0, 204));
         rankingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},

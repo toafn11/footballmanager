@@ -287,15 +287,33 @@ public class HomeFrame extends javax.swing.JFrame {
         initComponents();
         welcome.setText("Welcome " + UserSession.getUserName() + "(" + UserSession.getRole() + ")");
         addUser.setVisible(UserSession.isAdmin());
+        setupWindow();
         addImg();
     }
     public HomeFrame() {
         initComponents();
         welcome.setText("Welcome " + UserSession.getUserName() + "(" + UserSession.getRole() + ")");
         addUser.setVisible(UserSession.isAdmin());
+        setupWindow();
         addImg();
     }
-    
+    public void setupWindow() {
+        this.setTitle("Football Tournament Manager");
+        try {
+            String iconPath = "/img/FTM_logo.png"; 
+            
+            java.net.URL imgURL = getClass().getResource(iconPath);
+
+            if (imgURL != null) {
+                java.awt.Image icon = new javax.swing.ImageIcon(imgURL).getImage();
+                this.setIconImage(icon);
+            } else {
+                System.err.println("IMG not found " + iconPath);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void addImg(){
         String path = "/img/FTM_full_logo_1.png"; 
         String path2 = "/img/admin.png";

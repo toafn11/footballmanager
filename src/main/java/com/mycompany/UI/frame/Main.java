@@ -39,7 +39,7 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         setLogin();
         String path = "/img/FTM_logo.png";
-
+        setupWindow();
         java.net.URL imgURL = getClass().getResource(path);
 
         if (imgURL != null) {
@@ -49,7 +49,23 @@ public class Main extends javax.swing.JFrame {
             System.err.println("Img not found at " + path);
         }
     }
-    
+    public void setupWindow() {
+        this.setTitle("Football Tournament Manager");
+        try {
+            String iconPath = "/img/FTM_logo.png"; 
+            
+            java.net.URL imgURL = getClass().getResource(iconPath);
+
+            if (imgURL != null) {
+                java.awt.Image icon = new javax.swing.ImageIcon(imgURL).getImage();
+                this.setIconImage(icon);
+            } else {
+                System.err.println("IMG not found " + iconPath);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
