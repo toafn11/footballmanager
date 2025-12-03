@@ -10,6 +10,7 @@ import static com.mycompany.UI.frame.Main.conn;
 import com.mycompany.access.PlayerAccess;
 import com.mycompany.model.Player;
 import com.mycompany.model.PlayerOfTeam;
+import com.mycompany.service.UserSession;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -34,6 +35,7 @@ public class PlayerMain extends javax.swing.JFrame {
         posCb.setSelectedItem(player.position());
         numField.setText(player.shirtNumber() + "");
         addDataTable();
+        saveBtn.setVisible(UserSession.isAdmin());
     }
     
     
@@ -253,6 +255,7 @@ public class PlayerMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        
         PlayerAccess pacc = new PlayerAccess(conn);
         String newpos = posCb.getSelectedItem().toString();
         int newnum = Integer.parseInt(numField.getText());

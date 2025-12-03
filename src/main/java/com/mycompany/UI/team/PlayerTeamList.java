@@ -6,11 +6,22 @@ package com.mycompany.UI.team;
 
 import static com.mycompany.UI.frame.Main.conn;
 import static com.mycompany.UI.team.TeamManagement.TeamIDmanager;
+import com.mycompany.access.PlayerAccess;
 import com.mycompany.access.TeamAccess;
+import com.mycompany.model.Player;
 import com.mycompany.model.PlayerOfTeam;
+import com.mycompany.service.UserSession;
+import com.toedter.calendar.JDateChooser;
+import java.awt.GridLayout;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,13 +37,12 @@ public class PlayerTeamList extends javax.swing.JPanel {
     public PlayerTeamList(TeamCareMain team) throws SQLException {
         this.team = team;
         initComponents();
-        
-        addDataTable(conn);
+        addDataTable();
     }
     public PlayerTeamList() {
         initComponents();
     }
-    public void addDataTable(Connection conn) throws SQLException{
+    public void addDataTable() throws SQLException{
         TeamAccess tacc = new TeamAccess(conn);
         List<PlayerOfTeam> data = tacc.listPlayerOfTeam(TeamIDmanager);
         DefaultTableModel model = (DefaultTableModel) playerTable.getModel();
@@ -51,6 +61,8 @@ public class PlayerTeamList extends javax.swing.JPanel {
             );
         }
     }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -89,22 +101,28 @@ public class PlayerTeamList extends javax.swing.JPanel {
             }
         });
         jScrollPane3.setViewportView(playerTable);
+        if (playerTable.getColumnModel().getColumnCount() > 0) {
+            playerTable.getColumnModel().getColumn(0).setHeaderValue("Team");
+            playerTable.getColumnModel().getColumn(4).setHeaderValue("Goal");
+            playerTable.getColumnModel().getColumn(5).setHeaderValue("Yellow Card");
+            playerTable.getColumnModel().getColumn(6).setHeaderValue("Red Card");
+        }
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addGap(42, 42, 42)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 753, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

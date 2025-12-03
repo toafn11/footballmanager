@@ -5,13 +5,22 @@
 package com.mycompany.UI.player;
 
 import com.mycompany.UI.frame.HomeFrame;
+import static com.mycompany.UI.frame.Main.conn;
 import com.mycompany.access.PlayerAccess;
 import com.mycompany.db.DatabaseConnector;
 import com.mycompany.model.Player;
 import com.mycompany.service.UserSession;
+import com.toedter.calendar.JDateChooser;
+import java.awt.GridLayout;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,27 +43,43 @@ public class PlayerManagement extends javax.swing.JPanel {
         }
         DatabaseConnector db = new DatabaseConnector();
         this.conn = db.getConn();
-        addDataTable(conn);
+        addDataTable();
+        addDataFree();
     }
     public PlayerManagement() {
         initComponents();
     }
-    public void addDataTable(Connection conn) throws SQLException{
-            PlayerAccess pacc = new PlayerAccess(conn);
-            List<Player> data = pacc.listPlayer();
-            DefaultTableModel model = (DefaultTableModel) playerTable.getModel();
-            model.setRowCount(0);
-            for(Player t: data){
-                model.addRow(new Object[]{
-                    t.id(),
-                    t.name(),
-                    t.birthday(),
-                    t.position(),
-                    t.shirtNumber()
-                    }
-                );
-            }
+    public void addDataTable() throws SQLException{
+        PlayerAccess pacc = new PlayerAccess(conn);
+        List<Player> data = pacc.listPlayer();
+        DefaultTableModel model = (DefaultTableModel) playerTable.getModel();
+        model.setRowCount(0);
+        for(Player t: data){
+            model.addRow(new Object[]{
+                t.id(),
+                t.name(),
+                t.birthday(),
+                t.position(),
+                t.shirtNumber()
+                }
+            );
         }
+     }
+    public void addDataFree(){
+        PlayerAccess tacc = new PlayerAccess(conn);
+        List<Player> player = tacc.getFreeAgents();
+        DefaultTableModel model = (DefaultTableModel) freeTable.getModel();
+        model.setRowCount(0);
+        for(Player p: player){
+            model.addRow(new Object[]{
+                p.id(),
+                p.name(),
+                p.position(),
+                p.birthday().toString(),
+                p.shirtNumber()
+            });
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,6 +99,10 @@ public class PlayerManagement extends javax.swing.JPanel {
         add = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         pictureBox1 = new components.PictureBox();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        freeTable = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(44, 44, 44));
@@ -125,6 +154,40 @@ public class PlayerManagement extends javax.swing.JPanel {
 
         pictureBox1.setImage(new javax.swing.ImageIcon("D:\\NewProject\\src\\main\\java\\com\\mycompany\\newproject\\icons8-search-50 (1).png"));
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 85, 0));
+        jLabel2.setText("Free Agent:");
+
+        freeTable.setBackground(new java.awt.Color(153, 153, 153));
+        freeTable.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        freeTable.setForeground(new java.awt.Color(255, 153, 51));
+        freeTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Name", "Position", "Birthday", "Shirt Number"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        freeTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane4.setViewportView(freeTable);
+
+        jButton2.setBackground(new java.awt.Color(204, 85, 0));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Sign");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -136,11 +199,19 @@ public class PlayerManagement extends javax.swing.JPanel {
                         .addComponent(jButton6)
                         .addGap(224, 224, 224)
                         .addComponent(pictureBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 524, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(add)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
-                    .addComponent(jScrollPane2))
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1020, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -154,8 +225,14 @@ public class PlayerManagement extends javax.swing.JPanel {
                         .addComponent(add))
                     .addComponent(jButton6))
                 .addGap(19, 19, 19)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jButton3.setText("Back");
@@ -166,16 +243,16 @@ public class PlayerManagement extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
                         .addComponent(jButton3)
                         .addGap(234, 234, 234)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
+                        .addGap(80, 80, 80)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addContainerGap(167, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,7 +263,7 @@ public class PlayerManagement extends javax.swing.JPanel {
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(712, Short.MAX_VALUE))
+                .addContainerGap(600, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -221,7 +298,8 @@ public class PlayerManagement extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            addDataTable(conn);    // TODO add your handling code here:
+            addDataTable();
+            addDataFree();// TODO add your handling code here:
         } catch (SQLException ex) {
             System.getLogger(PlayerManagement.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
@@ -243,17 +321,91 @@ public class PlayerManagement extends javax.swing.JPanel {
         frame.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (UserSession.isAdmin()) return;
+        
+        int selectedRow = freeTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Choose a player!");
+            return;
+        }
+        int playerId = (int) freeTable.getValueAt(selectedRow, 0);
+        String playerName = freeTable.getValueAt(selectedRow, 1).toString();
+
+        JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5));
+
+        JTextField txtSalary = new JTextField();
+        com.toedter.calendar.JDateChooser txtEndDate = new com.toedter.calendar.JDateChooser();
+        txtEndDate.setDateFormatString("dd-MM-yyyy");
+        
+
+        txtEndDate.setDate(java.sql.Date.valueOf(java.time.LocalDate.now().plusYears(1)));
+
+
+
+        panel.add(new JLabel("Offer Salary ($):"));
+        panel.add(txtSalary);
+        panel.add(new JLabel("Contract End Date:"));
+        panel.add(txtEndDate);
+
+
+        int result = JOptionPane.showConfirmDialog(null, panel,
+                "Sign contract with " + playerName,
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                String salaryStr = txtSalary.getText().trim();
+                if (salaryStr.isEmpty()) throw new Exception("Please enter Salary!");
+                int salary = Integer.parseInt(salaryStr);
+                if (salary <= 0) throw new Exception("Salary must be positive!");
+
+                java.util.Date rawDate = txtEndDate.getDate();
+                
+                if (rawDate == null) throw new Exception("Please enter Contract End Date!");
+
+                java.time.LocalDate endDate = new java.sql.Date(rawDate.getTime()).toLocalDate();
+
+                if (endDate.isBefore(java.time.LocalDate.now())) {
+                    throw new Exception("End date must be in the future!");
+                }
+
+
+                PlayerAccess pAcc = new PlayerAccess(conn);
+                int myTeamId = UserSession.getMyTeamId();
+
+                boolean success = pAcc.signFreeAgent(playerId, myTeamId, endDate, salary);
+
+                if (success) {
+                    JOptionPane.showMessageDialog(this, "Successfully signed " + playerName + "!");
+                    addDataFree(); 
+                } else {
+                    JOptionPane.showMessageDialog(this, "Sign failed! Maybe player is not free?", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Salary must be a valid integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Error", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
+    private javax.swing.JTable freeTable;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
     private components.PictureBox pictureBox1;
     private javax.swing.JTable playerTable;
     // End of variables declaration//GEN-END:variables

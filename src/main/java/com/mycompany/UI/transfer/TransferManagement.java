@@ -322,6 +322,11 @@ public class TransferManagement extends javax.swing.JPanel {
         int selectedRow = toTable.getSelectedRow();
 
         int transferId = (int) toTable.getValueAt(selectedRow, 0);
+        String state =  toTable.getValueAt(selectedRow, 6).toString();
+        if(state.equals("pending")){
+            accept.setVisible(true);
+            reject.setVisible(true);
+        }
         String playerName = toTable.getValueAt(selectedRow, 1).toString();
         String yearsStr = JOptionPane.showInputDialog(this, 
                 "Sell " + playerName + "!\nEnter new contract lenght:", 
@@ -368,8 +373,12 @@ public class TransferManagement extends javax.swing.JPanel {
     }//GEN-LAST:event_rejectActionPerformed
 
     private void toTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toTableMouseClicked
-        accept.setVisible(true);
-        reject.setVisible(true);
+        int selectedRow = toTable.getSelectedRow();
+        String state =  toTable.getValueAt(selectedRow, 6).toString();
+        if(state.equals("pending")){
+            accept.setVisible(true);
+            reject.setVisible(true);
+        }
         revalidate();
         repaint();
     }//GEN-LAST:event_toTableMouseClicked

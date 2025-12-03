@@ -40,29 +40,24 @@ public class UserAccess {
         return null;
     }
     
-    public void addUser(String user_name, String pwd, String role_user, int team_id) throws SQLException{
+    public boolean addUser(String user_name, String pwd, int team_id) throws SQLException{
         
         PreparedStatement pStm = this.conn.prepareStatement("INSERT INTO users(name_user, hashedpwd, role_user, team_id) "
-                    + "values(?,?,?,?);");
+                    + "values(?,?,'user',?);");
         pStm.setString(1, user_name);
         pStm.setString(2, hashPassword(pwd));
-        pStm.setString(3, role_user);
-        if(role_user.equals("admin")){
-            pStm.setNull(4, Types.INTEGER);
-        } else if(role_user.equals("user")){
-            pStm.setInt(4, team_id);
+        if (team_id > 0) {
+            pStm.setInt(3, team_id);
         } else {
-            System.out.println("Invalid user role " + role_user + "!");
-            return;
+             pStm.setNull(3, java.sql.Types.INTEGER); 
         }
-
         try{
-            pStm.executeUpdate();
             System.out.println("Added User!");
+            return pStm.executeUpdate() > 0;
         } catch(SQLException e){
             e.printStackTrace();
         }
- 
+        return false;
     }
     
     
@@ -95,9 +90,4 @@ public class UserAccess {
         System.out.println(); 
     }
     
-    public static void main(String[] args) throws SQLException {
-        DatabaseConnector dbconn = new DatabaseConnector("jdbc:mysql://localhost/ftm" ,"root", "");
-        UserAccess acc = new UserAccess(dbconn.getConn());
-        acc.addUser("toan", "toan", "user", 2);
-    }
 }

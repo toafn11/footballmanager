@@ -205,4 +205,73 @@ public class PlayerAccess {
 
         return list;
     }
+    
+    public List<Player> getFreeAgents() {
+        List<Player> list = new ArrayList<>();
+        String sql = "SELECT id, name_player, birthday, pos, shirt_num "
+                   + "FROM players "
+                   + "WHERE id NOT IN ("
+                   + "    SELECT player_id FROM contract WHERE state = 'active'"
+                   + ")";
+
+        try (PreparedStatement pStm = this.conn.prepareStatement(sql);
+             ResultSet rs = pStm.executeQuery()) {
+
+            while (rs.next()) {
+
+                Date sqlDate = rs.getDate("birthday");
+                LocalDate dob = (sqlDate != null) ? sqlDate.toLocalDate() : null;
+
+                list.add(new Player(
+                    rs.getInt("id"),
+                    rs.getString("name_player"),
+                    dob,
+                    rs.getString("pos"),
+                    rs.getInt("shirt_num")
+                ));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    public boolean signFreeAgent(int playerId, int teamId, LocalDate endDate, int salary) {
+        if (!isFreeAgent(playerId)) {
+            return false;
+        }
+
+        String sql = "INSERT INTO contract(player_id, team_id, start_date, end_date, salary, state) "
+                   + "VALUES(?, ?, CURDATE(), ?, ?, 'active')";
+
+        try (PreparedStatement pStm = this.conn.prepareStatement(sql)) {
+
+            pStm.setInt(1, playerId);
+            pStm.setInt(2, teamId);
+            pStm.setObject(3, endDate);
+            pStm.setInt(4, salary);
+
+            return pStm.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    private boolean isFreeAgent(int playerId) {
+        String sql = "SELECT COUNT(*) FROM contract WHERE player_id = ? AND state = 'active'";
+        try (PreparedStatement pStm = this.conn.prepareStatement(sql)) {
+            pStm.setInt(1, playerId);
+            try (ResultSet rs = pStm.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) == 0; 
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

@@ -146,7 +146,7 @@ public class TourCareMain extends javax.swing.JFrame {
 
         jButton5.setBackground(new java.awt.Color(77, 120, 204));
         jButton5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jButton5.setText("LichThiDau");
+        jButton5.setText("Schedule");
         jButton5.setBorder(null);
         jButton5.addActionListener(this::jButton5ActionPerformed);
 
